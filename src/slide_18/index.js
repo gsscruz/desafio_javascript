@@ -1,16 +1,21 @@
-const soma = (a) => (b) => a + b;
+function Pessoa(nome) {
+  this.nome = nome
+}
 
-// Mesma coisa que:
-// const soma = (a) => {
-//   return (b) => {
-//     return a + b;
-//   }
-// }
+Pessoa.prototype.teste1 = function () {
+  console.log(this.nome) // Marina
 
-const somar10 = soma(10)
+  const arrowFunction = () => {
+    console.log(this.nome) // Marina
+  }
 
-console.log(typeof somar10) // function
-console.log(somar10(2)) // 12
-console.log(
-  soma(21)(21) // 42
-)
+  function func() {
+    console.log(this.nome) // undefined
+  }
+
+  arrowFunction()
+  func()
+}
+
+const marina = new Pessoa('Marina')
+marina.teste1()

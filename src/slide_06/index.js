@@ -14,7 +14,6 @@ const pessoa = {
   }
 }
 
-
 console.log(pessoa.nome) // Tiago
 console.log(pessoa['idade']) // 40
 

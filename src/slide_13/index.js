@@ -1,11 +1,23 @@
-function Pessoa(nome) {
-  this.nome = nome
+class Animal {
+  constructor(nome) {
+    this.nome = nome
+  }
+
+  cumprimentar() {
+    return 'Sou um animal, portanto, não sei falar'
+  }
 }
 
-Pessoa.prototype.cumprimentar = function () {
-  return `Olá, meu nome é ${this.nome}!`
+class Pessoa extends Animal {
+  cumprimentar() {
+    return `Olá, meu nome é ${this.nome}!`
+  }
 }
 
-const julia = new Pessoa('Julia')
-console.log(julia.nome) // Julia
-console.log(julia.cumprimentar()) // Olá, meu nome é Julia!
+const boris = new Animal('Boris')
+console.log(boris.nome) // Boris
+console.log(boris.cumprimentar()) // Sou um animal, portanto, não sei falar
+
+const klaus = new Pessoa('Klaus')
+console.log(klaus.nome) // Klaus
+console.log(klaus.cumprimentar()) // Olá, meu nome é Klaus!

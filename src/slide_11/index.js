@@ -1,23 +1,25 @@
-class Animal {
-  constructor(nome) {
-    this.nome = nome
-  }
+const numeros = [1, 2, 3, 4, 5]
+const listaComDuplicados = ['banana', 'banana', 'abacaxi', 'banana', 'abacaxi']
 
-  cumprimentar() {
-    return 'Sou um animal, portanto, não sei falar'
-  }
-}
+const soma = numeros.reduce(
+  (acumulador, numero) => acumulador + numero,
+  0
+)
 
-class Pessoa extends Animal {
-  cumprimentar() {
-    return `Olá, meu nome é ${this.nome}!`
-  }
-}
+const objetoComDuplicados = listaComDuplicados.reduce(
+  (acumulador, numero) => {
+    const numeroDeDuplicados = acumulador[numero]
 
-const boris = new Animal('Boris')
-console.log(boris.nome) // Boris
-console.log(boris.cumprimentar()) // Sou um animal, portanto, não sei falar
+    if (numeroDeDuplicados) {
+      acumulador[numero] = numeroDeDuplicados + 1
+    } else {
+      acumulador[numero] = 1
+    }
 
-const klaus = new Pessoa('Klaus')
-console.log(klaus.nome) // Klaus
-console.log(klaus.cumprimentar()) // Olá, meu nome é Klaus!
+    return acumulador
+  },
+  {}
+)
+
+console.log(soma) // 15
+console.log(objetoComDuplicados) // { banana: 3, abacaxi: 2 }

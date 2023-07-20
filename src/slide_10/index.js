@@ -1,17 +1,12 @@
-class Pessoa {
-  constructor(nome) {
-    this.nome = nome
-  }
+const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  cumprimentar() {
-    return `Olá, meu nome é ${this.nome}!`
-  }
-}
+const numerosDobrados = numeros.map((numero) => {
+  return numero * 2;
+})
+const numerosMenorQue5 = numeros.filter((numero) => {
+  return numero < 5;
+})
 
-const klaus = new Pessoa('Klaus')
-console.log(klaus.nome) // Klaus
-console.log(klaus.cumprimentar()) // Olá, meu nome é Klaus!
-
-const joao = new Pessoa('João')
-console.log(joao.nome) // João
-console.log(joao.cumprimentar()) // Olá, meu nome é João!
+console.log(numeros) // [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+console.log(numerosDobrados) // [ 2, 4, 6, 8, 10, 12, 14, 16, 18 ]
+console.log(numerosMenorQue5) // [ 1, 2, 3, 4 ]
