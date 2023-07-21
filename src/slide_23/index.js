@@ -1,21 +1,24 @@
-const minhaFuncao = (parametro) => {
-  parametro = parametro + parametro
-  return parametro
+const cumprimentar = (cumprimento) => (nome) => (trabalho) => {
+  return `${cumprimento}, meu nome é ${nome} e trabalho com ${trabalho}!`
 }
+// Mesma coisa que:
+// const cumprimentar = (cumprimento) => {
+//   return (nome) => {
+//     return (trabalho) => {
+//       return `${cumprimento}, meu nome é ${nome} e trabalho com ${trabalho}!`
+//     }
+//   }
+// }
 
-const string = 'Olá mundo'
-const numero = 123
-const booleano = true
-const nulo = null
-const naoDefinido = undefined
+const cumprimentarComBoaTarde = cumprimentar('Boa tarde')
+const cumprimentarComBoaNoite = cumprimentar('Boa noite')
 
-console.log(minhaFuncao(string)) // Olá mundoOlá mundo
-console.log(string) // Olá mundo
-console.log(minhaFuncao(numero)) // 246
-console.log(numero) // 123
-console.log(minhaFuncao(booleano)) // 2
-console.log(booleano) // true
-console.log(minhaFuncao(nulo)) // 0
-console.log(nulo) // null
-console.log(minhaFuncao(naoDefinido)) // NaN
-console.log(naoDefinido) // undefined
+const boaTardeDoFernando = cumprimentarComBoaTarde('Fernando')
+const boaTardeDaJulia = cumprimentarComBoaTarde('Julia')
+
+console.log(
+  boaTardeDoFernando('veterinária') // Boa tarde, meu nome é Fernando e trabalho com veterinária!
+)
+console.log(
+  boaTardeDajulia('programacão') // Boa tarde, meu nome é Julia e trabalho com programação!
+)

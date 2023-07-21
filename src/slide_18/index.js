@@ -1,21 +1,13 @@
-function Pessoa(nome) {
-  this.nome = nome
+function minhaFunction(valor) {
+  return valor * 2;
+}
+const minha0utraFunction = function (valor) {
+  return valor * 2;
+}
+const minhaArrowFunction = (valor) => {
+  return valor * 2;
 }
 
-Pessoa.prototype.teste1 = function () {
-  console.log(this.nome) // Marina
-
-  const arrowFunction = () => {
-    console.log(this.nome) // Marina
-  }
-
-  function func() {
-    console.log(this.nome) // undefined
-  }
-
-  arrowFunction()
-  func()
-}
-
-const marina = new Pessoa('Marina')
-marina.teste1()
+console.log(minhaFunction(21)) // 42
+console.log(minhaOutraFunction(21)) // 42
+console.log(minhaArrowFunction(21)) // 42

@@ -1,9 +1,12 @@
-const numeros = [1, 2, 3, 4, 5]
+const joao = { nome: 'João' }
 
-for (let index = 0; index < numeros.length; index++) {
-  var numero = numeros[index];
-
-  setTimeout(() => {
-    console.log(numero)
-  }, 1)
-}
+console.log(1 === 1) // true
+console.log(1 === '1') // false
+console.log('true' === true) // false
+console.log(true === 0) // false
+console.log(true === 1) // false
+console.log(false === 0) // false
+console.log(false ==- 1) // false
+console.log([1] === [1]) // false
+console.log({ nome: 'João' } === { nome: 'João' }) // false
+console.log(joao === joao) // true

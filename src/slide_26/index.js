@@ -1,12 +1,17 @@
-const joao = { nome: 'João' }
+const mutarObjeto = (objeto) => {
+  objeto.novaPropriedade = 'teste'
+  return objeto
+}
 
-console.log(1 === 1) // true
-console.log(1 === '1') // false
-console.log('true' === true) // false
-console.log(true === 0) // false
-console.log(true === 1) // false
-console.log(false === 0) // false
-console.log(false ==- 1) // false
-console.log([1] === [1]) // false
-console.log({ nome: 'João' } === { nome: 'João' }) // false
-console.log(joao === joao) // true
+const mutarLista = (lista) => {
+  lista[1] = 'valor novo'
+  return lista
+}
+
+const minhaLista = [1, 'dois', false];
+const meuObjeto = { nome: 'Lucas', idade: 25 };
+
+console.log(mutarLista(minhaLista)) // [ 1, 'valor novo', false ]
+console.log(minhaLista) // [ 1, 'valor novo', false ]
+console.log(mutarObjeto(meuObjeto)) // { nome: 'Lucas', idade: 25, novaPropriedade: 'teste' }
+console.log(meuObjeto) // { nome: 'Lucas', idade: 25, novaPropriedade: 'teste' }

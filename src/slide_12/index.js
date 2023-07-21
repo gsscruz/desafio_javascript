@@ -1,17 +1,18 @@
-class Pessoa {
-  constructor(nome) {
-    this.nome = nome
-  }
+const lista = ['item 1', 'item 2', 'item 3']
 
-  cumprimentar() {
-    return `Olá, meu nome é ${this.nome}!`
-  }
-}
+const [item1, item2] = lista
+const [, ...item2EItem3Array] = lista
+const [,,item3] = lista
+const novaLista = [
+  'item 0',
+  ...lista,
+  'item 4',
+]
 
-const klaus = new Pessoa('Klaus')
-console.log(klaus.nome) // Klaus
-console.log(klaus.cumprimentar()) // Olá, meu nome é Klaus!
+console.log(item1) // item 1
+console.log(item2) // item 2
+console.log(item2EItem3Array) // [ 'item 2', 'item 3' ]
+console.log(novaLista) // [ 'item 0', 'item 1', 'item 2', 'item 3', 'item 4' ]
 
-const joao = new Pessoa('João')
-console.log(joao.nome) // João
-console.log(joao.cumprimentar()) // Olá, meu nome é João!
+const [letraA, letraB, letraC] = 'ABC'
+console.log(letraA, letraB, letraC) // A B C

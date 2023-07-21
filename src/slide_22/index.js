@@ -1,11 +1,16 @@
-const obterExtratoBancario = (servicoDoBanco, usuario) => {
-  return servicoDoBanco.obterExtrato(usuario)
-}
-const usuario = { /* informações do usuario */ }
+const soma = (a) => (b) => a + b;
 
-// obtem extrato do Banco do Brasil
-obterExtratoBancario(abstracaoDoBancoDoBrasil, usuario)
-// obtem extrato da Caixa
-obterExtratoBancario(abstracaoDaCaixa, usuario)
-// obtem extrato do Bradesco
-obterExtratoBancario(abstracaoDaBradesco, usuario)
+// Mesma coisa que:
+// const soma = (a) => {
+//   return (b) => {
+//     return a + b;
+//   }
+// }
+
+const somar10 = soma(10)
+
+console.log(typeof somar10) // function
+console.log(somar10(2)) // 12
+console.log(
+  soma(21)(21) // 42
+)

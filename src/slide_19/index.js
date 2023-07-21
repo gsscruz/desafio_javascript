@@ -1,27 +1,15 @@
-function somaFunc(a) {
-  return function (b) {
-    return a + b;
-  }
+function Pessoa(nome) {
+  this.nome = nome
 }
 
-const somaArrow = (a) => {
-  return (b) => {
-    return a + b;
-  }
+Pessoa.prototype.teste1 = function () {
+  console.log(this.nome) // Marina
 }
 
-const somar5 = somaFunc(5)
+Pessoa.prototype.teste1 = () => {
+  console.log(this.nome) // undefined
+}
 
-console.log(typeof somar5) // function
-console.log(somar5(2)) // 7
-
-const somar10 = somaArrow(10)
-console.log(typeof somar10) // function
-console.log(somar10(2)) // 12
-
-console.log(
-  somaFunc(40)(2) // 42
-)
-console.log(
-  somaArrow(21)(21) // 42
-)
+const marina = new Pessoa('Marina')
+marina.teste1()
+marina.teste2()

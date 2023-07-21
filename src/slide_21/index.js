@@ -1,24 +1,27 @@
-const cumprimentar = (cumprimento) => (nome) => (trabalho) => {
-  return `${cumprimento}, meu nome é ${nome} e trabalho com ${trabalho}!`
+function somaFunc(a) {
+  return function (b) {
+    return a + b;
+  }
 }
-// Mesma coisa que:
-// const cumprimentar = (cumprimento) => {
-//   return (nome) => {
-//     return (trabalho) => {
-//       return `${cumprimento}, meu nome é ${nome} e trabalho com ${trabalho}!`
-//     }
-//   }
-// }
 
-const cumprimentarComBoaTarde = cumprimentar('Boa tarde')
-const cumprimentarComBoaNoite = cumprimentar('Boa noite')
+const somaArrow = (a) => {
+  return (b) => {
+    return a + b;
+  }
+}
 
-const boaTardeDoFernando = cumprimentarComBoaTarde('Fernando')
-const boaTardeDaJulia = cumprimentarComBoaTarde('Julia')
+const somar5 = somaFunc(5)
+
+console.log(typeof somar5) // function
+console.log(somar5(2)) // 7
+
+const somar10 = somaArrow(10)
+console.log(typeof somar10) // function
+console.log(somar10(2)) // 12
 
 console.log(
-  boaTardeDoFernando('veterinária') // Boa tarde, meu nome é Fernando e trabalho com veterinária!
+  somaFunc(40)(2) // 42
 )
 console.log(
-  boaTardeDajulia('programacão') // Boa tarde, meu nome é Julia e trabalho com programação!
+  somaArrow(21)(21) // 42
 )

@@ -1,23 +1,27 @@
-class Animal {
-  constructor(nome) {
-    this.nome = nome
-  }
-
-  cumprimentar() {
-    return 'Sou um animal, portanto, não sei falar'
-  }
+const pessoa = {
+  nome: 'Felipe Nolleto',
+  endereco: { rua: 'Rua Bonita', numero: 123, cidade: undefined, estado: null },
+  habilidades: [
+    { id: 1, linguagem: 'JS' },
+    { id: 2, linguagem: 'Ruby on Rails' },
+  ]
 }
 
-class Pessoa extends Animal {
-  cumprimentar() {
-    return `Olá, meu nome é ${this.nome}!`
-  }
-}
+const { nome, endereco: enderecoDaPessoa } = pessoa
+const { numero, rua, cidade = 'Campinas', estado = 'São Paulo' } = enderecoDaPessoa
+const {
+  habilidades: [
+    primeiraLiguagem,
+    { linguagem: nomeDaSegundaLinguagem },
+    terceiraLinguagem = 'Nada?'
+  ]
+} = pessoa
 
-const boris = new Animal('Boris')
-console.log(boris.nome) // Boris
-console.log(boris.cumprimentar()) // Sou um animal, portanto, não sei falar
-
-const klaus = new Pessoa('Klaus')
-console.log(klaus.nome) // Klaus
-console.log(klaus.cumprimentar()) // Olá, meu nome é Klaus!
+console.log(nome) // Felipe Nolleto
+console.log(numero) // 123
+console.log(rua) // Rua Bonita
+console.log(cidade) // Campinas
+console.log(estado) // null
+console.log(primeiraLiguagem) // { id: 1, linguagem: 'JS' }
+console.log(nomeDaSegundaLinguagem) // Ruby on Rails
+console.log(terceiraLinguagem) // Nada?

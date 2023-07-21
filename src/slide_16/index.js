@@ -1,13 +1,10 @@
-function minhaFunction(valor) {
-  return valor * 2;
-}
-const minha0utraFunction = function (valor) {
-  return valor * 2;
-}
-const minhaArrowFunction = (valor) => {
-  return valor * 2;
+class Pessoa {
+  constructor(nome) {
+    this.nome = nome
+  }
 }
 
-console.log(minhaFunction(21)) // 42
-console.log(minhaOutraFunction(21)) // 42
-console.log(minhaArrowFunction(21)) // 42
+const joao = new Animal('João')
+
+console.log(typeof Pessoa) // function
+console.log(typeof joao) // object
