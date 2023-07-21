@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafio de JavaScript</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+  <body>
+    <h1 class="header">Lista de usuários</h1>
+
+    <section class="add-people">
+      <h3>Adicionar pessoa</h3>
+
+      <form>
+        <label>
+          Nome:
+          <input name="name" type="text" minlength="5" required />
+        </label>
+
+        <label>
+          Idade:
+          <input name="age" type="number" min="1" max="100" required />
+        </label>
+
+        <label>
+          Sexo:
+          <select name="sex" required>
+            <option selected value="">Selecione</option>
+            <option value="feminino">Mulher</option>
+            <option value="masculino">Homem</option>
+            <option value="outro">Outro</option>
+          </select>
+        </label>
+
+        <label>
+          Renda:
+          <input name="income" type="number" min="1" required />
+        </label>
+
+        <label>
+          Habilidades:
+          <input
+            class="xl"
+            name="skills"
+            skils="income"
+            type="text"
+            placeholder="Linguaguens de programação separadas por ';'"
+            required
+          />
+        </label>
+
+        <input type="submit" value="Adicionar" />
+      </form>
+    </section>
+
+    <section class="people-list">
+      <h3>Lista de pessoas</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Sexo</th>
+            <th>Renda</th>
+            <th>Habilidades</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="statistics">
+      <h3>Estatisticas</h3>
+
+      <dl>
+        <dt>Média de idade:</dt>
+        <dd data-age-average></dd>
+
+        <dt>Média salarial:</dt>
+        <dd data-income-average></dd>
+
+        <dt>Sexos Femininos:</dt>
+        <dd data-woman-sex-count></dd>
+
+        <dt>Sexos Masculino:</dt>
+        <dd data-man-sex-count></dd>
+
+        <dt>Sexos Outro:</dt>
+        <dd data-other-sex-count></dd>
+    </dl>
+    </section>
+
+    <script src="./javascript/main.js"></script>
+  </body>
+</html>

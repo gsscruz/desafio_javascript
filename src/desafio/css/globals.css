@@ -1,0 +1,26 @@
+body {
+  display: grid;
+  grid-template:  'header header'
+                  'add-people add-people'
+                  'people-list statistics';
+}
+
+.header {
+  grid-area: header;
+}
+
+.add-people {
+  grid-area: add-people;
+}
+
+.people-list {
+  grid-area: people-list;
+}
+
+.statistics {
+  grid-area: statistics;
+}
+
+section {
+  margin: 10px;
+}

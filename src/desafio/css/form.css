@@ -1,0 +1,20 @@
+.add-people form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.add-people form input,
+.add-people form select {
+  min-width: 150px;
+  border-radius: 4px;
+  border-width: 1px;
+  padding: 4px 8px;
+}
+
+.add-people form input.xl,
+.add-people form select.xl {
+  min-width: 300px;
+}

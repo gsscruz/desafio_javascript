@@ -1,0 +1,10 @@
+.people-list table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.people-list table td,
+.people-list table th {
+  border: 1px solid black;
+  padding: 8px;
+}
