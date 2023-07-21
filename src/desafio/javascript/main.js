@@ -11,7 +11,7 @@ const formatters = {
   toCurrency: (value) => new Intl.NumberFormat('PT-br', { style: 'currency', currency: 'BRL' }).format(value),
 }
 
-const createTd = (text) => {x
+const createTd = (text) => {
   const td = document.createElement('td')
   td.innerText = text
   return td
