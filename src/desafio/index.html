@@ -56,6 +56,20 @@
     <section class="people-list">
       <h3>Lista de pessoas</h3>
 
+      <form class="inline">
+        <label>
+          Pesquisar:
+          <input
+            name="search"
+            type="text"
+            placeholder="Nome, idade, sexo ou habilidades"
+            required
+          />
+        </label>
+
+        <input type="submit" value="Pesquisar" />
+      </form>
+
       <table>
         <thead>
           <tr>
@@ -65,6 +79,7 @@
             <th>Sexo</th>
             <th>Renda</th>
             <th>Habilidades</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -75,22 +90,64 @@
     <section class="statistics">
       <h3>Estatisticas</h3>
 
-      <dl>
-        <dt>Média de idade:</dt>
-        <dd data-age-average></dd>
+      <div class="content">
+        <dl>
+          <dt>N.º de pessoas:</dt>
+          <dd>15</dd>
 
-        <dt>Média salarial:</dt>
-        <dd data-income-average></dd>
+          <dt>N.º de pessoas filtradas:</dt>
+          <dd>15</dd>
 
-        <dt>Sexos Femininos:</dt>
-        <dd data-woman-sex-count></dd>
+          <dt>Primerio nome que mais aparece:</dt>
+          <dd>Ezequiel</dd>
 
-        <dt>Sexos Masculino:</dt>
-        <dd data-man-sex-count></dd>
+          <dt>N.º de primeiros nomes únicos:</dt>
+          <dd>6</dd>
 
-        <dt>Sexos Outro:</dt>
-        <dd data-other-sex-count></dd>
-    </dl>
+          <dt>Maior Idade:</dt>
+          <dd>46</dd>
+
+          <dt>Menor idade:</dt>
+          <dd>23</dd>
+
+          <dt>Média de idade:</dt>
+          <dd>31</dd>
+        </dl>
+
+        <dl>
+          <dt>Top 3 pessoas mais bem pagas:</dt>
+          <dd>Emiliana Pio; Angelina Florinda; Eduarda Angelo</dd>
+
+          <dt>Maior salário:</dt>
+          <dd>R$ 20.000,00</dd>
+
+          <dt>Menor salário:</dt>
+          <dd>R$ 500,00</dd>
+
+          <dt>Média salarial:</dt>
+          <dd>R$ 5.660,00</dd>
+
+          <dt>N.º de sexos Femininos:</dt>
+          <dd>6</dd>
+
+          <dt>N.º de sexos Masculino:</dt>
+          <dd>5</dd>
+
+          <dt>N.º de sexos Outro:</dt>
+          <dd>4</dd>
+        </dl>
+
+        <dl>
+          <dt>Todas as linguaguens:</dt>
+          <dd>Java; Javascript; Ruby; PHP; C#; Kotlin; Python; Go; Swifty</dd>
+
+          <dt>Top 3 linguaguens:</dt>
+          <dd>Javascript; Ruby; C#</dd>
+
+          <dt>N.º de linguaguens diferentes:</dt>
+          <dd>9</dd>
+        </dl>
+      </div>
     </section>
 
     <script src="./javascript/main.js"></script>

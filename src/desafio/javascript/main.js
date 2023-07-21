@@ -9,12 +9,24 @@ const autoIncrement = createAutoIncrement()
 const formatters = {
   toNumber: Number,
   toCurrency: (value) => new Intl.NumberFormat('PT-br', { style: 'currency', currency: 'BRL' }).format(value),
+  toSexGenre: (value) => {
+    if (value === 'masculino') {
+      return 'Masculino'
+    } else if (value === 'feminino') {
+      return 'Feminino'
+    }
+    return 'Outro'
+  }
 }
 
-const createTd = (text) => {
-  const td = document.createElement('td')
-  td.innerText = text
-  return td
+const createElementWith = (elementTag, properties = {}) => {
+  const element = document.createElement(elementTag)
+
+  Object.entries(properties).forEach(([key, value]) => {
+    element[key] = value
+  })
+
+  return element
 }
 
 const refreshPeopleListInUI = (table, people) => {
@@ -26,14 +38,18 @@ const refreshPeopleListInUI = (table, people) => {
   })
 
   people.forEach((person) => {
-    const tr = document.createElement('tr')
+    const tr = createElementWith('tr')
+    const tdButton = createElementWith('td')
+    const deleteButton = createElementWith('button', { innerText: 'Deletar' })
+    tdButton.append(deleteButton)
 
-    tr.append(createTd(person.id))
-    tr.append(createTd(person.name))
-    tr.append(createTd(person.age))
-    tr.append(createTd(person.sex))
-    tr.append(createTd(formatters.toCurrency(person.income)))
-    tr.append(createTd(person.skills))
+    tr.append(createElementWith('td', { innerText: person.id }))
+    tr.append(createElementWith('td', { innerText: person.name }))
+    tr.append(createElementWith('td', { innerText: person.age }))
+    tr.append(createElementWith('td', { innerText: formatters.toSexGenre(person.sex) }))
+    tr.append(createElementWith('td', { innerText: formatters.toCurrency(person.income) }))
+    tr.append(createElementWith('td', { innerText: person.skills }))
+    tr.append(tdButton)
 
     tBody.append(tr)
   })
@@ -58,13 +74,23 @@ const main = () => {
   const form = document.querySelector('form')
   const table = document.querySelector('table')
   const people = [
-    { id: autoIncrement(), name: 'Kleber', age: '32', sex: 'masculino', income: 5_000, skills: 'JS; Java; Kotlin' },
-    { id: autoIncrement(), name: 'Julia', age: '35', sex: 'feminino', income: 8_000, skills: 'Ruby; Python; JS; Java;' },
-    { id: autoIncrement(), name: 'Carla', age: '30', sex: 'feminino', income: 10_500, skills: 'C#;JS; Kotlin' },
-    { id: autoIncrement(), name: 'Antonio', age: '30', sex: 'masculino', income: 1_250, skills: 'Ruby; C#; Go;' },
-    { id: autoIncrement(), name: 'Julia', age: '30', sex: 'feminino', income: 8_500, skills: 'Ruby;JS;Python' },
-    { id: autoIncrement(), name: 'Kleber', age: '30', sex: 'masculino', income: 500, skills: 'Java' },
+    { id: autoIncrement(), name: 'Eduarda Mesquita', age: '30', sex: 'feminino', income: 5_500, skills: 'Javascript; C# ;PHP;' },
+    { id: autoIncrement(), name: 'Ezequiel Nascimento', age: '25', sex: 'masculino', income: 2_250, skills: 'Kotlin; Python;Ruby' },
+    { id: autoIncrement(), name: 'Emiliana Pio', age: '42', sex: 'outro', income: 20_000, skills: 'Kotlin;Javascript;C#' },
+    { id: autoIncrement(), name: 'Angelina Florinda', age: '30', sex: 'feminino', income: 15_000, skills: 'Ruby; Go; PHP;Python;' },
+    { id: autoIncrement(), name: 'Eduarda Angelo', age: '23', sex: 'feminino', income: 8_000, skills: 'PHP;Java;C#' },
+    { id: autoIncrement(), name: 'Kleber Santana', age: '46', sex: 'outro', income: 3_000, skills: 'Javascript' },
+    { id: autoIncrement(), name: 'Marina Alves', age: '25', sex: 'feminino', income: 5_000, skills: 'Javascript;PHP;Kotlin;' },
+    { id: autoIncrement(), name: 'Emiliana Nascimento', age: '42', sex: 'feminino', income: 5_500, skills: 'Kotlin; Swifty; Python;' },
+    { id: autoIncrement(), name: 'Kleber Santana', age: '40', sex: 'masculino', income: 7_750, skills: 'Python;Javascript;Ruby' },
+    { id: autoIncrement(), name: 'Ezequiel Micaela', age: '25', sex: 'outro', income: 1_000, skills: 'Java;PHP;C#;' },
+    { id: autoIncrement(), name: 'Eduarda Gonçalo', age: '30', sex: 'feminino', income: 500, skills: 'Java; Javascript ; Ruby' },
+    { id: autoIncrement(), name: 'Kleber Silva', age: '23', sex: 'masculino', income: 1_500, skills: 'Kotlin; Ruby; Python' },
+    { id: autoIncrement(), name: 'Ezequiel Machado', age: '27', sex: 'masculino', income: 2_200, skills: 'Javascript; C#; Ruby; Go' },
+    { id: autoIncrement(), name: 'Angelina Silva', age: '35', sex: 'outro', income: 4_200, skills: 'Ruby; Java; C#' },
+    { id: autoIncrement(), name: 'Ezequiel Nunes', age: '30', sex: 'masculino', income: 3_500, skills: 'Javascript; Ruby' },
   ]
+  window.people =people
 
   form.addEventListener('submit', handleFormSubmit(table, people))
   refreshPeopleListInUI(table, people)

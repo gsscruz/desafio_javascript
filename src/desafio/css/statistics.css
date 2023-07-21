@@ -1,0 +1,14 @@
+.statistics .content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.statistics .content dt {
+  font-weight: 600;
+}
+
+.statistics .content dd {
+  margin-bottom: 8px;
+}
