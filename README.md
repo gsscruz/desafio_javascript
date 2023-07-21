@@ -6,8 +6,10 @@ O desafio está dentro da pasta `src/desafio`. Basta abrir `index.html` no seu n
 
 Gist do desafio: https://gist.github.com/nolleto/a673f35ff160873288919b633be65435
 
-
 ## Slides
+
+Link: [Linguagem JavaScript
+](https://docs.google.com/presentation/d/1VBqFnYY0XYPZJYovUDSRF_nkdJIdzkNK0AkUg_eON_Q/edit?usp=sharing)
 
 - Abrir [Slide 3](./src/slide_03/index.js)
 - Abrir [Slide 4](./src/slide_04/index.js)
