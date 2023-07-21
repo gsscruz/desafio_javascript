@@ -1,59 +1,4 @@
-const createAutoIncrement = (initialValue = 1) => {
-  let currentValue = initialValue
-  return () => {
-    return currentValue++
-  }
-}
 const autoIncrement = createAutoIncrement()
-
-const formatters = {
-  toNumber: Number,
-  toCurrency: (value) => new Intl.NumberFormat('PT-br', { style: 'currency', currency: 'BRL' }).format(value),
-  toSexGenre: (value) => {
-    if (value === 'masculino') {
-      return 'Masculino'
-    } else if (value === 'feminino') {
-      return 'Feminino'
-    }
-    return 'Outro'
-  }
-}
-
-const createElementWith = (elementTag, properties = {}) => {
-  const element = document.createElement(elementTag)
-
-  Object.entries(properties).forEach(([key, value]) => {
-    element[key] = value
-  })
-
-  return element
-}
-
-const refreshPeopleListInUI = (table, people) => {
-  const tBody = table.querySelector('tbody')
-  const trsToRemove = tBody.querySelectorAll('tr')
-
-  trsToRemove.forEach((tr) => {
-    tr.remove()
-  })
-
-  people.forEach((person) => {
-    const tr = createElementWith('tr')
-    const tdButton = createElementWith('td')
-    const deleteButton = createElementWith('button', { innerText: 'Deletar' })
-    tdButton.append(deleteButton)
-
-    tr.append(createElementWith('td', { innerText: person.id }))
-    tr.append(createElementWith('td', { innerText: person.name }))
-    tr.append(createElementWith('td', { innerText: person.age }))
-    tr.append(createElementWith('td', { innerText: formatters.toSexGenre(person.sex) }))
-    tr.append(createElementWith('td', { innerText: formatters.toCurrency(person.income) }))
-    tr.append(createElementWith('td', { innerText: person.skills }))
-    tr.append(tdButton)
-
-    tBody.append(tr)
-  })
-}
 
 const handleFormSubmit = (table, people) => (event) => {
   const { target: form } = event
@@ -90,7 +35,6 @@ const main = () => {
     { id: autoIncrement(), name: 'Angelina Silva', age: '35', sex: 'outro', income: 4_200, skills: 'Ruby; Java; C#' },
     { id: autoIncrement(), name: 'Ezequiel Nunes', age: '30', sex: 'masculino', income: 3_500, skills: 'Javascript; Ruby' },
   ]
-  window.people =people
 
   form.addEventListener('submit', handleFormSubmit(table, people))
   refreshPeopleListInUI(table, people)
