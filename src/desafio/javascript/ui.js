@@ -17,6 +17,7 @@ const statisticsHighestAge = document.querySelector('#highestAge')
 const statisticsLowestAge = document.querySelector('#lowestAge')
 const statisticsNumberOfPeople = document.querySelector('#totalPeople')
 const statisticsMostFrequentName = document.querySelector('#mostFrequentName')
+const statisticsAverageAge = document.querySelector('#averageAge')
 
 //primeiro nome que mais aparece
 const mostFrequentName = (people) => {
@@ -38,6 +39,13 @@ const mostFrequentName = (people) => {
   }
   return mostFrequentFirstName
 }
+const averageAge = (people) => {
+  const ages = [...people].map(person => Number(person.age))
+  const ageSum = ages.reduce((accumulator, currentVal) => accumulator + currentVal, 0)
+  const average = ageSum / ages.length
+  return average
+
+}
 const refreshPeopleListInUI = (table, people) => {
 
   const tBody = table.querySelector('tbody')
@@ -45,7 +53,7 @@ const refreshPeopleListInUI = (table, people) => {
 
   statisticsNumberOfPeople.textContent = people.length
   statisticsMostFrequentName.textContent = mostFrequentName(people)
-
+  statisticsAverageAge.textContent = averageAge(people).toFixed()
 
   trsToRemove.forEach((tr) => {
     tr.remove()
