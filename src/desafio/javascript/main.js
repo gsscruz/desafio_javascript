@@ -70,7 +70,7 @@ const handleFilter = (table, people) => (event) => {
     } else if (filterSkills(person).includes(queryItemFormatted)) {
       return person
     }
-  }).filter(el => el !== undefined)
+  }).filter(person => person !== undefined)
 
   refreshPeopleListInUI(table, filteredPeople)
 }
