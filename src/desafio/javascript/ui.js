@@ -8,9 +8,44 @@ const createElementWith = (elementTag, properties = {}) => {
   return element
 }
 
+let ageBottom = 0;
+let ageCeiling = 999;
+const highestAge = (person) => person.age > ageBottom ? ageBottom = person.age : ageBottom
+const lowestAge = (person) => person.age < ageCeiling ? ageCeiling = person.age : ageCeiling
+
+const statisticsHighestAge = document.querySelector('#highestAge')
+const statisticsLowestAge = document.querySelector('#lowestAge')
+const statisticsNumberOfPeople = document.querySelector('#totalPeople')
+const statisticsMostFrequentName = document.querySelector('#mostFrequentName')
+
+//primeiro nome que mais aparece
+const mostFrequentName = (people) => {
+  const getFirstName = (fullName) => fullName.split(' ')[0]
+  const firstNames = [...people].map(person => getFirstName(person.name))
+
+  const nameFrequency = {}
+  firstNames.forEach(name => {
+    nameFrequency[name] = (nameFrequency[name] || 0) + 1
+  })
+
+  let frequency = 0
+  let mostFrequentFirstName = ''
+  for (let personName in nameFrequency) {
+    if (nameFrequency[personName] > frequency) {
+      frequency = nameFrequency[personName]
+      mostFrequentFirstName = personName
+    }
+  }
+  return mostFrequentFirstName
+}
 const refreshPeopleListInUI = (table, people) => {
+
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
+
+  statisticsNumberOfPeople.textContent = people.length
+  statisticsMostFrequentName.textContent = mostFrequentName(people)
+
 
   trsToRemove.forEach((tr) => {
     tr.remove()
@@ -21,6 +56,10 @@ const refreshPeopleListInUI = (table, people) => {
     const tdButton = createElementWith('td')
     const deleteButton = createElementWith('button', { innerText: 'Deletar' })
     tdButton.append(deleteButton)
+
+
+    statisticsHighestAge.textContent = highestAge(person)
+    statisticsLowestAge.textContent = lowestAge(person)
 
     tr.append(createElementWith('td', { innerText: person.id }))
     tr.append(createElementWith('td', { innerText: person.name }))
