@@ -25,8 +25,10 @@ const statisticsLowestWage = document.querySelector('#lowestWage')
 const statisticsNumberOfPeople = document.querySelector('#totalPeople')
 const statisticsMostFrequentName = document.querySelector('#mostFrequentName')
 const statisticsAverageAge = document.querySelector('#averageAge')
+const statisticsFemaleAmount = document.querySelector('#femaleAmount')
+const statisticsMaleAmount = document.querySelector('#maleAmount')
+const statisticsOtherAmount = document.querySelector('#otherAmount')
 
-//primeiro nome que mais aparece
 const mostFrequentName = (people) => {
   const getFirstName = (fullName) => fullName.split(' ')[0]
   const firstNames = [...people].map(person => getFirstName(person.name))
@@ -53,14 +55,29 @@ const averageAge = (people) => {
   return average
 
 }
+
+const genderAmount = (people) => {
+  const genderObject = {
+    masculino: 0,
+    feminino: 0,
+    outro: 0
+  }
+  const proxyPeople = [...people].forEach(person => {
+    genderObject[person.sex]++
+  })
+  return genderObject
+}
 const refreshPeopleListInUI = (table, people) => {
 
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
-
+  genderAmount(people)
   statisticsNumberOfPeople.textContent = people.length
   statisticsMostFrequentName.textContent = mostFrequentName(people)
   statisticsAverageAge.textContent = averageAge(people).toFixed()
+  statisticsFemaleAmount.textContent = genderAmount(people).feminino
+  statisticsMaleAmount.textContent = genderAmount(people).masculino
+  statisticsOtherAmount.textContent = genderAmount(people).outro
 
   trsToRemove.forEach((tr) => {
     tr.remove()
