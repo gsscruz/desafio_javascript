@@ -28,15 +28,18 @@ const statisticsAverageAge = document.querySelector('#averageAge')
 const statisticsFemaleAmount = document.querySelector('#femaleAmount')
 const statisticsMaleAmount = document.querySelector('#maleAmount')
 const statisticsOtherAmount = document.querySelector('#otherAmount')
+const statisticsUniqueFirstNameAmount = document.querySelector('#uniqueFirstNameAmount')
 
 const mostFrequentName = (people) => {
   const getFirstName = (fullName) => fullName.split(' ')[0]
   const firstNames = [...people].map(person => getFirstName(person.name))
-
   const nameFrequency = {}
+
   firstNames.forEach(name => {
     nameFrequency[name] = (nameFrequency[name] || 0) + 1
   })
+
+  const uniqueNames = Object.keys(nameFrequency).length
 
   let frequency = 0
   let mostFrequentFirstName = ''
@@ -46,7 +49,8 @@ const mostFrequentName = (people) => {
       mostFrequentFirstName = personName
     }
   }
-  return mostFrequentFirstName
+
+  return { mostFrequentFirstName, uniqueNames }
 }
 const averageAge = (people) => {
   const ages = [...people].map(person => Number(person.age))
@@ -62,18 +66,19 @@ const genderAmount = (people) => {
     feminino: 0,
     outro: 0
   }
-  const proxyPeople = [...people].forEach(person => {
-    genderObject[person.sex]++
-  })
+
+  const proxyPeople = [...people].forEach(person => { genderObject[person.sex]++ })
+
   return genderObject
 }
 const refreshPeopleListInUI = (table, people) => {
 
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
-  genderAmount(people)
+
   statisticsNumberOfPeople.textContent = people.length
-  statisticsMostFrequentName.textContent = mostFrequentName(people)
+  statisticsMostFrequentName.textContent = mostFrequentName(people).mostFrequentFirstName
+  statisticsUniqueFirstNameAmount.textContent = mostFrequentName(people).uniqueNames
   statisticsAverageAge.textContent = averageAge(people).toFixed()
   statisticsFemaleAmount.textContent = genderAmount(people).feminino
   statisticsMaleAmount.textContent = genderAmount(people).masculino
