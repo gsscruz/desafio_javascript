@@ -8,16 +8,8 @@ const createElementWith = (elementTag, properties = {}) => {
   return element
 }
 
-
-const addLocalStorage = (data) => localStorage.setItem(`id${data.id}`, data.id)
-const toDelete = (data, table, people) => () => {
-  addLocalStorage(data)
-  refreshPeopleListInUI(table, people)
-}
-
 const refreshPeopleListInUI = (table, people) => {
   const idToDelete = { ...localStorage }
-
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
 
@@ -38,6 +30,11 @@ const refreshPeopleListInUI = (table, people) => {
     const tr = createElementWith('tr')
     const tdButton = createElementWith('td')
     const deleteButton = createElementWith('button', { innerText: 'Deletar' })
+    const addLocalStorage = (data) => localStorage.setItem(`id${data.id}`, data.id)
+    const toDelete = (data, table, people) => () => {
+      addLocalStorage(data)
+      refreshPeopleListInUI(table, people)
+    }
     tdButton.append(deleteButton)
 
     deleteButton.addEventListener('click', toDelete(person, table, people))
