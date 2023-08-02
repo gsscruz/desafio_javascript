@@ -10,11 +10,18 @@ const createElementWith = (elementTag, properties = {}) => {
 
 let ageBottom = 0;
 let ageCeiling = 999;
+let wageBottom = 0;
+let wageCeiling = 999999;
+
 const highestAge = (person) => person.age > ageBottom ? ageBottom = person.age : ageBottom
 const lowestAge = (person) => person.age < ageCeiling ? ageCeiling = person.age : ageCeiling
+const highestWage = (person) => person.income > wageBottom ? wageBottom = person.income : wageBottom
+const lowestWage = (person) => person.income < wageCeiling ? wageCeiling = person.income : wageCeiling
 
 const statisticsHighestAge = document.querySelector('#highestAge')
 const statisticsLowestAge = document.querySelector('#lowestAge')
+const statisticsHighestWage = document.querySelector('#highestWage')
+const statisticsLowestWage = document.querySelector('#lowestWage')
 const statisticsNumberOfPeople = document.querySelector('#totalPeople')
 const statisticsMostFrequentName = document.querySelector('#mostFrequentName')
 const statisticsAverageAge = document.querySelector('#averageAge')
@@ -65,9 +72,10 @@ const refreshPeopleListInUI = (table, people) => {
     const deleteButton = createElementWith('button', { innerText: 'Deletar' })
     tdButton.append(deleteButton)
 
-
     statisticsHighestAge.textContent = highestAge(person)
     statisticsLowestAge.textContent = lowestAge(person)
+    statisticsHighestWage.textContent = highestWage(person)
+    statisticsLowestWage.textContent = lowestWage(person)
 
     tr.append(createElementWith('td', { innerText: person.id }))
     tr.append(createElementWith('td', { innerText: person.name }))
