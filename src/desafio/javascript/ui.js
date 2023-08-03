@@ -30,9 +30,9 @@ const refreshPeopleListInUI = (table, people) => {
     const tr = createElementWith('tr')
     const tdButton = createElementWith('td')
     const deleteButton = createElementWith('button', { innerText: 'Deletar' })
-    const addLocalStorage = (data) => localStorage.setItem(`id${data.id}`, data.id)
+    const addDeletedPersonIdToLocalStorage = (data) => localStorage.setItem(`id${data.id}`, data.id)
     const deletePerson = (data, table, people) => () => {
-      addLocalStorage(data)
+      addDeletedPersonIdToLocalStorage(data)
       refreshPeopleListInUI(table, people)
     }
     tdButton.append(deleteButton)
