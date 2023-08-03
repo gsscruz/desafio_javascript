@@ -16,6 +16,7 @@ const handleFormSubmit = (table, people) => (event) => {
 }
 
 const main = () => {
+  const filterButton = document.querySelector('.inline')
   const form = document.querySelector('form')
   const table = document.querySelector('table')
   const people = [
@@ -36,8 +37,42 @@ const main = () => {
     { id: autoIncrement(), name: 'Ezequiel Nunes', age: '30', sex: 'masculino', income: 3_500, skills: 'Javascript; Ruby' },
   ]
 
+  filterButton.addEventListener('submit', handleFilter(table, people))
   form.addEventListener('submit', handleFormSubmit(table, people))
   refreshPeopleListInUI(table, people)
+}
+
+const handleFilter = (table, people) => (event) => {
+  const genderList = ["Masculino", "Feminino", "Outro"]
+  const queryItem = event.target[0].value
+  let queryItemFormatted = queryItem
+
+  if (genderList.includes(queryItem)) {
+    queryItemFormatted = queryItem.toLowerCase()
+  }
+
+  event.preventDefault();
+  const people_shallow_copy = [...people]
+
+  const filterName = (person) => person.name
+  const filterAge = (person) => person.age
+  const filterSex = (person) => person.sex
+  const filterSkills = (person) => person.skills
+
+  const filteredPeople = people_shallow_copy.map(person => {
+
+    if (queryItemFormatted === filterName(person)) {
+      return person
+    } else if (queryItemFormatted === filterAge(person)) {
+      return person
+    } else if (queryItemFormatted === filterSex(person)) {
+      return person
+    } else if (filterSkills(person).includes(queryItemFormatted)) {
+      return person
+    }
+  }).filter(person => person !== undefined)
+
+  refreshPeopleListInUI(table, filteredPeople)
 }
 
 main()
