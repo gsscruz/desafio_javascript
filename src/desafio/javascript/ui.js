@@ -29,6 +29,8 @@ const statisticsFemaleAmount = document.querySelector('#femaleAmount')
 const statisticsMaleAmount = document.querySelector('#maleAmount')
 const statisticsOtherAmount = document.querySelector('#otherAmount')
 const statisticsUniqueFirstNameAmount = document.querySelector('#uniqueFirstNameAmount')
+const statisticsTopThreeEarners = document.querySelector('#topThreeEarners')
+
 
 const mostFrequentName = (people) => {
   const getFirstName = (fullName) => fullName.split(' ')[0]
@@ -71,6 +73,27 @@ const genderAmount = (people) => {
 
   return genderObject
 }
+
+const topEarners = (people) => {
+  const earners = {}
+  const proxyPeople = [...people].map(person => {
+    earners[person.name] = person.income
+    return person
+  })
+
+  let topEarners = new Float64Array(Object.values(earners)).sort().reverse().slice(0, 3)
+  const pessoas = []
+
+  for (const key in earners) {
+    topEarners.forEach(wage => {
+      if (earners[key] === wage) {
+        pessoas.push(key)
+      }
+    })
+  }
+  return pessoas
+}
+
 const refreshPeopleListInUI = (table, people) => {
 
   const tBody = table.querySelector('tbody')
@@ -83,6 +106,7 @@ const refreshPeopleListInUI = (table, people) => {
   statisticsFemaleAmount.textContent = genderAmount(people).feminino
   statisticsMaleAmount.textContent = genderAmount(people).masculino
   statisticsOtherAmount.textContent = genderAmount(people).outro
+  statisticsTopThreeEarners.textContent = topEarners(people)
 
   trsToRemove.forEach((tr) => {
     tr.remove()
