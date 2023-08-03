@@ -9,18 +9,35 @@ const createElementWith = (elementTag, properties = {}) => {
 }
 
 const refreshPeopleListInUI = (table, people) => {
+  const idToDelete = { ...localStorage }
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
+
+  const peopleProxy = [...people].filter(person => {
+    const idValuesOfDeletePeople = Object.values(idToDelete)
+    const convertIdToNumber = idValuesOfDeletePeople.map(id => Number(id))
+
+    if (!convertIdToNumber.includes(person.id)) {
+      return person
+    }
+  })
 
   trsToRemove.forEach((tr) => {
     tr.remove()
   })
 
-  people.forEach((person) => {
+  peopleProxy.forEach((person) => {
     const tr = createElementWith('tr')
     const tdButton = createElementWith('td')
     const deleteButton = createElementWith('button', { innerText: 'Deletar' })
+    const addDeletedPersonIdToLocalStorage = (data) => localStorage.setItem(`id${data.id}`, data.id)
+    const deletePerson = (data, table, people) => () => {
+      addDeletedPersonIdToLocalStorage(data)
+      refreshPeopleListInUI(table, people)
+    }
     tdButton.append(deleteButton)
+
+    deleteButton.addEventListener('click', deletePerson(person, table, people))
 
     tr.append(createElementWith('td', { innerText: person.id }))
     tr.append(createElementWith('td', { innerText: person.name }))
