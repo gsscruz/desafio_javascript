@@ -30,7 +30,9 @@ const statisticsMaleAmount = document.querySelector('#maleAmount')
 const statisticsOtherAmount = document.querySelector('#otherAmount')
 const statisticsUniqueFirstNameAmount = document.querySelector('#uniqueFirstNameAmount')
 const statisticsTopThreeEarners = document.querySelector('#topThreeEarners')
-
+const statisticsAllLanguages = document.querySelector('#allLanguages')
+const statisticsAllDiferentLanguages = document.querySelector('#allDiferentLanguages')
+const statisticsopThreeLanguages = document.querySelector('#topThreeLanguages')
 
 const mostFrequentName = (people) => {
   const getFirstName = (fullName) => fullName.split(' ')[0]
@@ -68,9 +70,7 @@ const genderAmount = (people) => {
     feminino: 0,
     outro: 0
   }
-
   const proxyPeople = [...people].forEach(person => { genderObject[person.sex]++ })
-
   return genderObject
 }
 
@@ -94,7 +94,50 @@ const topEarners = (people) => {
   return pessoas
 }
 
+const programmingLanguages = (people) => {
+  const languages = [...people].map((person) => (person.skills).split(';')).flat()
+  const formattedLanguages = languages.map(language => language.trim()).filter(language => language !== '')
+  const uniqueLanguages = new Set([])
+  formattedLanguages.forEach(language => uniqueLanguages.add(language))
+
+  const allUniqueLanguages = []
+  uniqueLanguages.forEach(language => allUniqueLanguages.push(language))
+
+  const languagesForReference = {}
+  allUniqueLanguages.forEach(language => languagesForReference[language] = 0)
+
+
+  const languageFormatter = (skillString) => {
+    const firstFilter = skillString.split(';').flat()
+    const formattedLanguages = firstFilter.map(string => string.trim()).filter(language => language !== '')
+    return { firstFilter, formattedLanguages }
+  }
+
+  const languageCounter = (people) => {
+    const peopleAndTheirLanguages = {}
+    people.forEach(person => peopleAndTheirLanguages[person.name] = languageFormatter(person.skills).formattedLanguages)
+    for (const programmingLanguage in languagesForReference) {
+      for (const person in peopleAndTheirLanguages) {
+        peopleAndTheirLanguages[person].forEach(personLanguage => {
+          if (programmingLanguage === personLanguage) {
+            languagesForReference[programmingLanguage]++
+          }
+        }
+        )
+
+      }
+    }
+  }
+
+  languageCounter(people)
+  const sortedLanguages = Object.entries(languagesForReference).sort((a, b) => b[1] - a[1])
+  const threeMostBelovedLanguages = sortedLanguages.slice(0, 3).flat().filter(el => typeof el !== 'number')
+
+  return { allUniqueLanguages, threeMostBelovedLanguages }
+}
+
 const refreshPeopleListInUI = (table, people) => {
+
 
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
@@ -107,7 +150,9 @@ const refreshPeopleListInUI = (table, people) => {
   statisticsMaleAmount.textContent = genderAmount(people).masculino
   statisticsOtherAmount.textContent = genderAmount(people).outro
   statisticsTopThreeEarners.textContent = topEarners(people)
-
+  statisticsAllLanguages.textContent = programmingLanguages(people).allUniqueLanguages
+  statisticsAllDiferentLanguages.textContent = programmingLanguages(people).allUniqueLanguages.length
+  statisticsopThreeLanguages.textContent = programmingLanguages(people).threeMostBelovedLanguages
   trsToRemove.forEach((tr) => {
     tr.remove()
   })
