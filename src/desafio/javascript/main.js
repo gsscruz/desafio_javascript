@@ -43,11 +43,11 @@ const main = () => {
 }
 
 const handleFilter = (table, people) => (event) => {
-  const sexList = ["Masculino", "Feminino", "Outro"]
+  const genderList = ["Masculino", "Feminino", "Outro"]
   const queryItem = event.target[0].value
   let queryItemFormatted = queryItem
 
-  if (sexList.includes(queryItem)) {
+  if (genderList.includes(queryItem)) {
     queryItemFormatted = queryItem.toLowerCase()
   }
 
