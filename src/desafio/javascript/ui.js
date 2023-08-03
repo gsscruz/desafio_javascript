@@ -1,30 +1,18 @@
 const createElementWith = (elementTag, properties = {}) => {
   const element = document.createElement(elementTag)
-
   Object.entries(properties).forEach(([key, value]) => {
     element[key] = value
   })
-
   return element
 }
-
-let ageBottom = 0;
-let ageCeiling = 999;
-let wageBottom = 0;
-let wageCeiling = 999999;
-
-const highestAge = (person) => person.age > ageBottom ? ageBottom = person.age : ageBottom
-const lowestAge = (person) => person.age < ageCeiling ? ageCeiling = person.age : ageCeiling
-const highestWage = (person) => person.income > wageBottom ? wageBottom = person.income : wageBottom
-const lowestWage = (person) => person.income < wageCeiling ? wageCeiling = person.income : wageCeiling
 
 const statisticsHighestAge = document.querySelector('#highestAge')
 const statisticsLowestAge = document.querySelector('#lowestAge')
 const statisticsHighestWage = document.querySelector('#highestWage')
 const statisticsLowestWage = document.querySelector('#lowestWage')
 const statisticsNumberOfPeople = document.querySelector('#totalPeople')
-const statisticsMostFrequentName = document.querySelector('#mostFrequentName')
 const statisticsAverageAge = document.querySelector('#averageAge')
+const statisticsMostFrequentName = document.querySelector('#mostFrequentName')
 const statisticsFemaleAmount = document.querySelector('#femaleAmount')
 const statisticsMaleAmount = document.querySelector('#maleAmount')
 const statisticsOtherAmount = document.querySelector('#otherAmount')
@@ -53,15 +41,14 @@ const mostFrequentName = (people) => {
       mostFrequentFirstName = personName
     }
   }
-
   return { mostFrequentFirstName, uniqueNames }
 }
+
 const averageAge = (people) => {
   const ages = [...people].map(person => Number(person.age))
   const ageSum = ages.reduce((accumulator, currentVal) => accumulator + currentVal, 0)
   const average = ageSum / ages.length
   return average
-
 }
 
 const genderAmount = (people) => {
@@ -122,9 +109,7 @@ const programmingLanguages = (people) => {
           if (programmingLanguage === personLanguage) {
             languagesForReference[programmingLanguage]++
           }
-        }
-        )
-
+        })
       }
     }
   }
@@ -132,16 +117,76 @@ const programmingLanguages = (people) => {
   languageCounter(people)
   const sortedLanguages = Object.entries(languagesForReference).sort((a, b) => b[1] - a[1])
   const threeMostBelovedLanguages = sortedLanguages.slice(0, 3).flat().filter(el => typeof el !== 'number')
-
   return { allUniqueLanguages, threeMostBelovedLanguages }
 }
 
+
+const wageCounter = (people) => {
+  let topEarner = people[0].income
+  let bottomEarner = people[0].income
+
+  let higherWage = people[0].income
+  let lowerWage = people[0].income
+
+  people.forEach(person => {
+    if (person.income > higherWage) {
+      higherWage = person.income
+      topEarner = person.income
+    } else if (person.income < lowerWage) {
+      lowerWage = person.income;
+      bottomEarner = person.income
+    }
+  })
+  return { topEarner, bottomEarner }
+}
+
+const ageCounter = (people) => {
+  let oldest = people[0].age
+  let youngest = people[0].age
+
+  let older = people[0].age
+  let younger = people[0].age
+
+  people.forEach(person => {
+    if (person.age > older) {
+      older = person.age
+      oldest = person.age
+    } else if (person.age < younger) {
+      younger = person.age;
+      youngest = person.age
+    }
+  })
+  return { oldest, youngest }
+}
+
 const refreshPeopleListInUI = (table, people) => {
-
-
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
 
+  updatePeopleStatistics(people)
+
+  trsToRemove.forEach((tr) => {
+    tr.remove()
+  })
+
+  people.forEach((person) => {
+    const tr = createElementWith('tr')
+    const tdButton = createElementWith('td')
+    const deleteButton = createElementWith('button', { innerText: 'Deletar' })
+    tdButton.append(deleteButton)
+    tr.append(createElementWith('td', { innerText: person.id }))
+    tr.append(createElementWith('td', { innerText: person.name }))
+    tr.append(createElementWith('td', { innerText: person.age }))
+    tr.append(createElementWith('td', { innerText: formatters.toSexGenre(person.sex) }))
+    tr.append(createElementWith('td', { innerText: formatters.toCurrency(person.income) }))
+    tr.append(createElementWith('td', { innerText: person.skills }))
+    tr.append(tdButton)
+
+    tBody.append(tr)
+  })
+}
+
+const updatePeopleStatistics = (people) => {
   statisticsNumberOfPeople.textContent = people.length
   statisticsMostFrequentName.textContent = mostFrequentName(people).mostFrequentFirstName
   statisticsUniqueFirstNameAmount.textContent = mostFrequentName(people).uniqueNames
@@ -153,29 +198,8 @@ const refreshPeopleListInUI = (table, people) => {
   statisticsAllLanguages.textContent = programmingLanguages(people).allUniqueLanguages
   statisticsAllDiferentLanguages.textContent = programmingLanguages(people).allUniqueLanguages.length
   statisticsopThreeLanguages.textContent = programmingLanguages(people).threeMostBelovedLanguages
-  trsToRemove.forEach((tr) => {
-    tr.remove()
-  })
-
-  people.forEach((person) => {
-    const tr = createElementWith('tr')
-    const tdButton = createElementWith('td')
-    const deleteButton = createElementWith('button', { innerText: 'Deletar' })
-    tdButton.append(deleteButton)
-
-    statisticsHighestAge.textContent = highestAge(person)
-    statisticsLowestAge.textContent = lowestAge(person)
-    statisticsHighestWage.textContent = highestWage(person)
-    statisticsLowestWage.textContent = lowestWage(person)
-
-    tr.append(createElementWith('td', { innerText: person.id }))
-    tr.append(createElementWith('td', { innerText: person.name }))
-    tr.append(createElementWith('td', { innerText: person.age }))
-    tr.append(createElementWith('td', { innerText: formatters.toSexGenre(person.sex) }))
-    tr.append(createElementWith('td', { innerText: formatters.toCurrency(person.income) }))
-    tr.append(createElementWith('td', { innerText: person.skills }))
-    tr.append(tdButton)
-
-    tBody.append(tr)
-  })
+  statisticsHighestWage.textContent = wageCounter(people).topEarner
+  statisticsLowestWage.textContent = wageCounter(people).bottomEarner
+  statisticsHighestAge.textContent = ageCounter(people).oldest
+  statisticsLowestAge.textContent = ageCounter(people).youngest
 }
