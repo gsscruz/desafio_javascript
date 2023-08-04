@@ -10,6 +10,7 @@ const statisticsHighestAge = document.querySelector('#highestAge')
 const statisticsLowestAge = document.querySelector('#lowestAge')
 const statisticsHighestWage = document.querySelector('#highestWage')
 const statisticsLowestWage = document.querySelector('#lowestWage')
+const statisticsAverageWage = document.querySelector('#averageWage')
 const statisticsNumberOfPeople = document.querySelector('#totalPeople')
 const statisticsAverageAge = document.querySelector('#averageAge')
 const statisticsMostFrequentName = document.querySelector('#mostFrequentName')
@@ -137,7 +138,12 @@ const wageCounter = (people) => {
       bottomEarner = person.income
     }
   })
-  return { topEarner, bottomEarner }
+
+  const wages = [...people].map(person => Number(person.income))
+  const wageSum = wages.reduce((accumulator, currentVal) => accumulator + currentVal, 0)
+  const averageWage = wageSum / wages.length
+
+  return { topEarner, bottomEarner, averageWage }
 }
 
 const ageCounter = (people) => {
@@ -165,6 +171,7 @@ const refreshPeopleListInUI = (table, people) => {
   const trsToRemove = tBody.querySelectorAll('tr')
 
   updatePeopleStatistics(people)
+
   const peopleProxy = [...people].filter(person => {
     const idValuesOfDeletePeople = Object.values(idToDelete)
     const convertIdToNumber = idValuesOfDeletePeople.map(id => Number(id))
@@ -219,4 +226,5 @@ const updatePeopleStatistics = (people) => {
   statisticsLowestWage.textContent = wageCounter(people).bottomEarner
   statisticsHighestAge.textContent = ageCounter(people).oldest
   statisticsLowestAge.textContent = ageCounter(people).youngest
+  statisticsAverageWage.textContent = wageCounter(people).averageWage
 }
