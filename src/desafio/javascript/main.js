@@ -76,7 +76,6 @@ const handleFilter = (table, people) => (event) => {
     }
   }).filter(person => person !== undefined)
 
-  console.log(filteredPeople)
   refreshPeopleListInUI(table, filteredPeople)
 }
 
