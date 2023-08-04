@@ -60,7 +60,6 @@ const handleFilter = (table, people) => (event) => {
   const filterSkills = (person) => person.skills
 
   const filteredPeople = people_shallow_copy.map(person => {
-
     if (queryItemFormatted === filterName(person)) {
       return person
     } else if (queryItemFormatted === filterAge(person)) {

@@ -37,6 +37,7 @@ const mostFrequentName = (people) => {
 
   const uniqueNames = Object.keys(nameFrequency).length
 
+
   let frequency = 0
   let mostFrequentFirstName = ''
   for (let personName in nameFrequency) {
@@ -45,7 +46,8 @@ const mostFrequentName = (people) => {
       mostFrequentFirstName = personName
     }
   }
-  return { mostFrequentFirstName, uniqueNames }
+  const uniqueNameStat = nameFrequency[mostFrequentFirstName]
+  return { mostFrequentFirstName, uniqueNameStat }
 }
 
 const averageAge = (people) => {
@@ -170,14 +172,19 @@ const ageCounter = (people) => {
 const rowCounter = (htmlList) => htmlList.length
 
 const refreshPeopleListInUI = (table, people) => {
-  const idToDelete = { ...localStorage }
+
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
-  updatePeopleStatistics(people)
+
+  // updatePeopleStatistics(people)
+
+  const idToDelete = { ...localStorage }
+
   const peopleProxy = [...people].filter(person => {
     const idValuesOfDeletePeople = Object.values(idToDelete)
     const convertIdToNumber = idValuesOfDeletePeople.map(id => Number(id))
 
+    updatePeopleStatistics(people)
     if (!convertIdToNumber.includes(person.id)) {
       return person
     }
@@ -187,20 +194,19 @@ const refreshPeopleListInUI = (table, people) => {
     tr.remove()
   })
 
-
+  const deletePerson = (person, table, people) => () => {
+    localStorage.setItem(`id${person.id}`, person.id)
+    refreshPeopleListInUI(table, people)
+  }
 
   peopleProxy.forEach((person) => {
     const tr = createElementWith('tr')
     const tdButton = createElementWith('td')
     const deleteButton = createElementWith('button', { innerText: 'Deletar' })
-    const addDeletedPersonIdToLocalStorage = (data) => localStorage.setItem(`id${data.id}`, data.id)
-    const deletePerson = (data, table, people) => () => {
-      addDeletedPersonIdToLocalStorage(data)
-      refreshPeopleListInUI(table, people)
-    }
-    tdButton.append(deleteButton)
-
+    updatePeopleStatistics(people)
     deleteButton.addEventListener('click', deletePerson(person, table, people))
+
+    tdButton.append(deleteButton)
 
     tr.append(createElementWith('td', { innerText: person.id }))
     tr.append(createElementWith('td', { innerText: person.name }))
@@ -218,7 +224,7 @@ const refreshPeopleListInUI = (table, people) => {
 const updatePeopleStatistics = (people) => {
   statisticsNumberOfPeople.textContent = people.length
   statisticsMostFrequentName.textContent = mostFrequentName(people).mostFrequentFirstName
-  statisticsUniqueFirstNameAmount.textContent = mostFrequentName(people).uniqueNames
+  statisticsUniqueFirstNameAmount.textContent = mostFrequentName(people).uniqueNameStat
   statisticsAverageAge.textContent = averageAge(people).toFixed()
   statisticsFemaleAmount.textContent = genderAmount(people).feminino
   statisticsMaleAmount.textContent = genderAmount(people).masculino
