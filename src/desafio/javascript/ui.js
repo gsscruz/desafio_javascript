@@ -145,9 +145,9 @@ const wageCounter = (people) => {
 
   const wages = [...people].map(person => Number(person.income))
   const wageSum = wages.reduce((accumulator, currentVal) => accumulator + currentVal, 0)
-  const averageWage = wageSum / wages.length
+  const averageWage = (wageSum / wages.length)
 
-  return { topEarner, bottomEarner, averageWage }
+  return { topEarner, bottomEarner, averageWage: averageWage.toFixed(2) }
 }
 
 const ageCounter = (people) => {
@@ -176,34 +176,35 @@ const refreshPeopleListInUI = (table, people) => {
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
 
-  // updatePeopleStatistics(people)
 
-  const idToDelete = { ...localStorage }
 
-  const peopleProxy = [...people].filter(person => {
-    const idValuesOfDeletePeople = Object.values(idToDelete)
-    const convertIdToNumber = idValuesOfDeletePeople.map(id => Number(id))
+  const deletePerson = (person, table, newPeople) => () => {
+    localStorage.setItem(`id${person.id}`, person.id)
 
+    const idToDelete = { ...localStorage }
+
+    const people = [...newPeople].filter(person => {
+      const idValuesOfDeletePeople = Object.values(idToDelete)
+      const convertIdToNumber = idValuesOfDeletePeople.map(id => Number(id))
+
+
+      if (!convertIdToNumber.includes(person.id)) {
+        return person
+      }
+    })
     updatePeopleStatistics(people)
-    if (!convertIdToNumber.includes(person.id)) {
-      return person
-    }
-  })
+    refreshPeopleListInUI(table, people)
+  }
 
   trsToRemove.forEach((tr) => {
     tr.remove()
   })
-
-  const deletePerson = (person, table, people) => () => {
-    localStorage.setItem(`id${person.id}`, person.id)
-    refreshPeopleListInUI(table, people)
-  }
-
-  peopleProxy.forEach((person) => {
+  updatePeopleStatistics(people)
+  people.forEach((person) => {
     const tr = createElementWith('tr')
     const tdButton = createElementWith('td')
     const deleteButton = createElementWith('button', { innerText: 'Deletar' })
-    updatePeopleStatistics(people)
+
     deleteButton.addEventListener('click', deletePerson(person, table, people))
 
     tdButton.append(deleteButton)
@@ -219,7 +220,6 @@ const refreshPeopleListInUI = (table, people) => {
     tBody.append(tr)
   })
 }
-
 
 const updatePeopleStatistics = (people) => {
   statisticsNumberOfPeople.textContent = people.length

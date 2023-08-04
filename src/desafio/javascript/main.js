@@ -11,12 +11,13 @@ const handleFormSubmit = (table, people) => (event) => {
     id: autoIncrement(),
     ...newPerson,
   })
+
   refreshPeopleListInUI(table, people)
+
   form.reset()
 }
 
 const main = () => {
-  const filterButton = document.querySelector('.inline')
   const form = document.querySelector('form')
   const table = document.querySelector('table')
   const people = [
@@ -37,8 +38,11 @@ const main = () => {
     { id: autoIncrement(), name: 'Ezequiel Nunes', age: '30', sex: 'masculino', income: 3_500, skills: 'Javascript; Ruby' },
   ]
 
+  const filterButton = document.querySelector('.inline')
   filterButton.addEventListener('submit', handleFilter(table, people))
+
   form.addEventListener('submit', handleFormSubmit(table, people))
+
   refreshPeopleListInUI(table, people)
 }
 
@@ -60,6 +64,7 @@ const handleFilter = (table, people) => (event) => {
   const filterSkills = (person) => person.skills
 
   const filteredPeople = people_shallow_copy.map(person => {
+
     if (queryItemFormatted === filterName(person)) {
       return person
     } else if (queryItemFormatted === filterAge(person)) {
@@ -71,6 +76,7 @@ const handleFilter = (table, people) => (event) => {
     }
   }).filter(person => person !== undefined)
 
+  console.log(filteredPeople)
   refreshPeopleListInUI(table, filteredPeople)
 }
 
