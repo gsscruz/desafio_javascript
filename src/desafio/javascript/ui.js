@@ -1,8 +1,10 @@
 const createElementWith = (elementTag, properties = {}) => {
   const element = document.createElement(elementTag)
+
   Object.entries(properties).forEach(([key, value]) => {
     element[key] = value
   })
+
   return element
 }
 
@@ -22,6 +24,7 @@ const statisticsTopThreeEarners = document.querySelector('#topThreeEarners')
 const statisticsAllLanguages = document.querySelector('#allLanguages')
 const statisticsAllDiferentLanguages = document.querySelector('#allDiferentLanguages')
 const statisticsopThreeLanguages = document.querySelector('#topThreeLanguages')
+const statisticsAmountFilteredPeople = document.querySelector('#amountFilteredPeople')
 
 const mostFrequentName = (people) => {
   const getFirstName = (fullName) => fullName.split(' ')[0]
@@ -121,7 +124,6 @@ const programmingLanguages = (people) => {
   return { allUniqueLanguages, threeMostBelovedLanguages }
 }
 
-
 const wageCounter = (people) => {
   let topEarner = people[0].income
   let bottomEarner = people[0].income
@@ -165,13 +167,13 @@ const ageCounter = (people) => {
   return { oldest, youngest }
 }
 
+const rowCounter = (htmlList) => htmlList.length
+
 const refreshPeopleListInUI = (table, people) => {
   const idToDelete = { ...localStorage }
   const tBody = table.querySelector('tbody')
   const trsToRemove = tBody.querySelectorAll('tr')
-
   updatePeopleStatistics(people)
-
   const peopleProxy = [...people].filter(person => {
     const idValuesOfDeletePeople = Object.values(idToDelete)
     const convertIdToNumber = idValuesOfDeletePeople.map(id => Number(id))
@@ -184,6 +186,8 @@ const refreshPeopleListInUI = (table, people) => {
   trsToRemove.forEach((tr) => {
     tr.remove()
   })
+
+
 
   peopleProxy.forEach((person) => {
     const tr = createElementWith('tr')
@@ -210,6 +214,7 @@ const refreshPeopleListInUI = (table, people) => {
   })
 }
 
+
 const updatePeopleStatistics = (people) => {
   statisticsNumberOfPeople.textContent = people.length
   statisticsMostFrequentName.textContent = mostFrequentName(people).mostFrequentFirstName
@@ -226,5 +231,7 @@ const updatePeopleStatistics = (people) => {
   statisticsLowestWage.textContent = wageCounter(people).bottomEarner
   statisticsHighestAge.textContent = ageCounter(people).oldest
   statisticsLowestAge.textContent = ageCounter(people).youngest
+  statisticsAmountFilteredPeople.textContent = rowCounter(people)
   statisticsAverageWage.textContent = wageCounter(people).averageWage
+
 }
